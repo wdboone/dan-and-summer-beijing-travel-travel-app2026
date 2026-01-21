@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dan & Summer's Adventures in China 🇨🇳</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #fee5e5 0%, #fef3c7 100%);
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            animation: slideIn 0.6s ease-out;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .title {
+            font-size: 1.75rem;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+        
+        .hotel-info {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+        
+        .nav-tabs {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            overflow-x: auto;
+        }
+        
+        .nav-tab {
+            flex: 1;
+            min-width: 100px;
+            padding: 0.75rem 1rem;
+            border: none;
+            background: white;
+            color: #4b5563;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            border-bottom: 4px solid transparent;
+        }
+        
+        .nav-tab:hover {
+            background: #f9fafb;
+        }
+        
+        .nav-tab.active {
+            background: #dc2626;
+            color: white;
+            border-bottom-color: #991b1b;
+        }
+        
+        .tab-icon {
+            font-size: 1.25rem;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        
+        .tab-label {
+            font-size: 0.75rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .space-y-4 > * + * {
+            margin-top: 1rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: scale(1.02);
+        }
+        
+        .card-header {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #ef4444 0%, #eab308 100%);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: none;
+            text-align: left;
+        }
+        
+        .card-header-content {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .day-emoji {
+            font-size: 2rem;
+            animation: wave 2s infinite;
+        }
+        
+        .day-title {
+            font-weight: bold;
+            font-size: 1.125rem;
+        }
+        
+        .day-date {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+        
+        .card-body {
+            padding: 1rem;
+            animation: slideIn 0.6s ease-out;
+        }
+        
+        .activity-item {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+            padding: 0.75rem;
+            background: #f9fafb;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            transition: background 0.3s;
+        }
+        
+        .activity-item:hover {
+            background: #e5e7eb;
+        }
+        
+        .activity-icon {
+            font-size: 1.5rem;
+        }
+        
+        .activity-time {
+            font-weight: bold;
+            color: #dc2626;
+            margin-bottom: 0.25rem;
+        }
+        
+        .activity-desc {
+            color: #374151;
+        }
+        
+        .bourdain-quote {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, #eff6ff 0%, #f3e8ff 100%);
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .bourdain-label {
+            font-weight: bold;
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+        }
+        
+        .bourdain-text {
+            color: #374151;
+            font-style: italic;
+        }
+        
+        .alert-box {
+            background: linear-gradient(135deg, #fbbf24 0%, #ef4444 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
+            margin-bottom: 1rem;
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        .alert-title {
+            font-size: 1.125rem;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .alert-text {
+            font-size: 0.875rem;
+            text-align: center;
+            margin-top: 0.25rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        
+        .input-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1.125rem;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .input-field:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .info-box {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .info-box-yellow {
+            background: #fef3c7;
+            border-left: 4px solid #eab308;
+        }
+        
+        .info-box-red {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+        }
+        
+        .info-box-blue {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .info-box-green {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+        }
+        
+        .info-box-purple {
+            background: #e9d5ff;
+            border-left: 4px solid #a855f7;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn-blue {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .btn-blue:hover {
+            background: #2563eb;
+        }
+        
+        .btn-purple {
+            background: #a855f7;
+            color: white;
+        }
+        
+        .btn-purple:hover {
+            background: #9333ea;
+        }
+        
+        .file-input {
+            display: block;
+            width: 100%;
+            font-size: 0.875rem;
+            padding: 0.5rem;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .image-preview {
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .image-preview h3 {
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .image-preview img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        
+        .loading {
+            background: #dbeafe;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .loading-text {
+            color: #2563eb;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+        
+        .restaurant-card {
+            background: linear-gradient(135deg, #fef3c7 0%, #fee2e2 100%);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #ef4444;
+            margin-bottom: 0.75rem;
+            transition: box-shadow 0.3s;
+        }
+        
+        .restaurant-card:hover {
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .restaurant-name {
+            font-weight: bold;
+            font-size: 1.125rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .restaurant-type {
+            font-size: 0.875rem;
+            color: #4b5563;
+        }
+        
+        .restaurant-note {
+            font-size: 0.875rem;
+            color: #dc2626;
+            margin-top: 0.25rem;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .tip-card {
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s;
+        }
+        
+        .tip-card:hover {
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
+        
+        .tip-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tip-text {
+            font-size: 0.875rem;
+            color: #374151;
+        }
+        
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #dc2626 0%, #eab308 100%);
+            color: white;
+            text-align: center;
+            padding: 0.75rem;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .footer-text {
+            font-size: 0.875rem;
+            font-weight: bold;
+        }
+        
+        .footer-subtext {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+        
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            75% { transform: rotate(-10deg); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(220, 38, 38, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(220, 38, 38, 0.8); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .china-flag {
+            width: 60px;
+            height: 40px;
+            background: #DE2910;
+            position: relative;
+            display: inline-block;
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .star {
+            position: absolute;
+            background: #FFDE00;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+        
+        .star-big {
+            width: 12px;
+            height: 12px;
+            left: 8px;
+            top: 6px;
+        }
+        
+        .star-small {
+            width: 5px;
+            height: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .title {
+                font-size: 1.25rem;
+            }
+            .china-flag {
+                width: 40px;
+                height: 27px;
+            }
+            .star-big {
+                width: 8px;
+                height: 8px;
+                left: 5px;
+                top: 4px;
+            }
+            .star-small {
+                width: 3px;
+                height: 3px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        function ChinaFlag() {
+            return (
+                <div className="china-flag">
+                    <div className="star star-big"></div>
+                    <div className="star star-small" style={{left: '22px', top: '3px'}}></div>
+                    <div className="star star-small" style={{left: '26px', top: '9px'}}></div>
+                    <div className="star star-small" style={{left: '26px', top: '16px'}}></div>
+                    <div className="star star-small" style={{left: '22px', top: '21px'}}></div>
+                </div>
+            );
+        }
+
+        function App() {
+            const [activeTab, setActiveTab] = useState('itinerary');
+            const [activeDay, setActiveDay] = useState(null);
+            const [usdAmount, setUsdAmount] = useState('');
+            const [cnyAmount, setCnyAmount] = useState('');
+            const [selectedImage, setSelectedImage] = useState(null);
+            const [translation, setTranslation] = useState('');
+            const [isTranslating, setIsTranslating] = useState(false);
+            
+            const exchangeRate = 7.24;
+
+            const convertUSDtoCNY = (usd) => {
+                if (usd === '') {
+                    setCnyAmount('');
+                    return;
+                }
+                const cny = (parseFloat(usd) * exchangeRate).toFixed(2);
+                setCnyAmount(cny);
+            };
+
+            const convertCNYtoUSD = (cny) => {
+                if (cny === '') {
+                    setUsdAmount('');
+                    return;
+                }
+                const usd = (parseFloat(cny) / exchangeRate).toFixed(2);
+                setUsdAmount(usd);
+            };
+
+            const handleImageUpload = async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = async (event) => {
+                    const base64Image = event.target.result.split(',')[1];
+                    setSelectedImage(event.target.result);
+                    setIsTranslating(true);
+                    setTranslation('');
+
+                    try {
+                        const response = await fetch('https://api.anthropic.com/v1/messages', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                model: 'claude-sonnet-4-20250514',
+                                max_tokens: 1000,
+                                messages: [
+                                    {
+                                        role: 'user',
+                                        content: [
+                                            {
+                                                type: 'image',
+                                                source: {
+                                                    type: 'base64',
+                                                    media_type: file.type,
+                                                    data: base64Image
+                                                }
+                                            },
+                                            {
+                                                type: 'text',
+                                                text: 'Please identify and translate all Chinese text in this image to English. Provide a clear translation of each text element you can see.'
+                                            }
+                                        ]
+                                    }
+                                ]
+                            })
+                        });
+
+                        const data = await response.json();
+                        const translatedText = data.content
+                            .filter(item => item.type === 'text')
+                            .map(item => item.text)
+                            .join('\n');
+                        setTranslation(translatedText);
+                    } catch (error) {
+                        setTranslation('Translation failed. Please try again. Error: ' + error.message);
+                    } finally {
+                        setIsTranslating(false);
+                    }
+                };
+                reader.readAsDataURL(file);
+            };
+
+            const itinerary = [
+                {
+                    day: 1,
+                    title: "Arrival Day 🛬",
+                    date: "Wed, June 3",
+                    emoji: "✈️",
+                    activities: [
+                        { time: "12:00 PM", activity: "Land at Beijing Capital International Airport", icon: "✈️" },
+                        { time: "2:30 PM", activity: "Check-in at DoubleTree by Hilton & rest", icon: "🏨" },
+                        { time: "4:00 PM", activity: "Light exploration - Financial Street or National Theater", icon: "🚶" },
+                        { time: "6:00 PM", activity: "Welcome Dinner - Beijing Roast Duck at Sui Yuan 🦆", icon: "🍽️" }
+                    ],
+                    bourdainTip: "\"The roast duck isn't just food - it's a ritual, a tradition. Watch them carve it tableside. That crispy skin? That's Beijing's love letter to the world.\" 🦆"
+                },
+                {
+                    day: 2,
+                    title: "The Great Wall! 🏯",
+                    date: "Thu, June 4",
+                    emoji: "🏔️",
+                    activities: [
+                        { time: "7:00 AM", activity: "Early departure to Mutianyu Great Wall", icon: "🚗" },
+                        { time: "9:30 AM - 1:00 PM", activity: "Explore the Great Wall - cable car up, toboggan down!", icon: "🎢" },
+                        { time: "1:00 PM", activity: "Lunch near Mutianyu", icon: "🍜" },
+                        { time: "4:30 PM", activity: "Return to hotel & relax at spa/pool", icon: "🏊" },
+                        { time: "7:00 PM", activity: "Celebrate at TRB Hutong (Michelin ⭐) or Sichuan street food", icon: "🌶️" }
+                    ],
+                    bourdainTip: "\"You're walking on history. 2,000 years of it. This isn't just stones - it's the spine of an empire. Take it in. Feel small. That's the point.\" 🌄"
+                },
+                {
+                    day: 3,
+                    title: "Imperial Beijing 👑",
+                    date: "Fri, June 5",
+                    emoji: "🏛️",
+                    activities: [
+                        { time: "8:00 AM", activity: "Tiananmen Square - world's largest public square", icon: "🏛️" },
+                        { time: "9:00 AM - 1:00 PM", activity: "Forbidden City - 3-4 hours exploring imperial palace", icon: "👑" },
+                        { time: "1:00 PM", activity: "Quanjude Roast Duck (most famous in China!) 🦆", icon: "🍽️" },
+                        { time: "2:30 PM", activity: "Jingshan Park - panoramic Forbidden City views 📸", icon: "🌳" },
+                        { time: "4:00 PM", activity: "Wangfujing Street shopping", icon: "🛍️" },
+                        { time: "5:30 PM", activity: "Wangfujing Snack Street - 500+ varieties!", icon: "🦂" }
+                    ],
+                    bourdainTip: "\"Scorpions on a stick? Hell yes. This is where you eat like a local. Don't think. Just point and eat. That's the adventure.\" 🦂"
+                },
+                {
+                    day: 4,
+                    title: "Temples & Gardens 🏮",
+                    date: "Sat, June 6",
+                    emoji: "🎋",
+                    activities: [
+                        { time: "6:30 AM", activity: "Temple of Heaven - watch locals do tai chi!", icon: "🧘" },
+                        { time: "8:00 AM", activity: "Explore Temple structures - 2-3 hours", icon: "⛩️" },
+                        { time: "1:00 PM", activity: "Summer Palace - China's best-preserved royal garden", icon: "🏞️" },
+                        { time: "4:00 PM", activity: "Liulichang Cultural Street - calligraphy & antiques", icon: "🖌️" },
+                        { time: "7:00 PM", activity: "Traditional mutton hot pot at Donglaishun (since 1903!)", icon: "🍲" }
+                    ],
+                    bourdainTip: "\"6:30 AM. Early? Yes. Worth it? Absolutely. You'll see Beijing's soul - elderly folks practicing tai chi, dancing with ribbons. This is the real deal.\" 🌅"
+                },
+                {
+                    day: 5,
+                    title: "Museums & Culture 🎨",
+                    date: "Sun, June 7",
+                    emoji: "🏛️",
+                    activities: [
+                        { time: "9:00 AM", activity: "National Museum of China - 2-3 hours", icon: "🏺" },
+                        { time: "12:00 PM", activity: "Beipinglou Restaurant - authentic Beijing specialties", icon: "🥟" },
+                        { time: "1:30 PM", activity: "Beihai Park - leisurely stroll", icon: "🌸" },
+                        { time: "3:30 PM", activity: "Xidan Shopping District - final souvenirs", icon: "🎁" },
+                        { time: "6:00 PM", activity: "Hotel spa & rooftop garden", icon: "🧖" },
+                        { time: "8:00 PM", activity: "Farewell dinner - celebrate your adventure!", icon: "🎉" }
+                    ],
+                    bourdainTip: "\"Try the Baodu, the Douzhi, the Zhajiangmian. Weird names? Maybe. But this is what grandmas make. This is home cooking, Beijing style.\" 🍜"
+                },
+                {
+                    day: 6,
+                    title: "Departure 👋",
+                    date: "Mon, June 8",
+                    emoji: "🛫",
+                    activities: [
+                        { time: "Morning", activity: "Check out & optional Tianning Temple visit", icon: "🏯" },
+                        { time: "Departure", activity: "Transfer to Beijing Capital Airport (allow 3 hours)", icon: "✈️" }
+                    ],
+                    bourdainTip: "\"You came for the duck, but you're leaving with stories. That's the way it should be. Zàijiàn, Beijing.\" 👋"
+                }
+            ];
+
+            const restaurants = [
+                { name: "🦆 Quanjude Roast Duck", type: "Must-Try", note: "Most famous in China!" },
+                { name: "🦆 Sui Yuan (Hotel)", type: "Roast Duck", note: "Signature set menu" },
+                { name: "⭐ TRB Hutong", type: "Michelin 1-Star", note: "Fusion in traditional setting" },
+                { name: "🍲 Donglaishun", type: "Hot Pot", note: "Since 1903!" },
+                { name: "🌶️ Guanganmen Food Street", type: "Sichuan", note: "Spicy heaven" },
+                { name: "🦂 Wangfujing Snack Street", type: "Street Food", note: "500+ varieties!" }
+            ];
+
+            const tips = [
+                { icon: "🎫", tip: "Book ALL tickets in advance! Forbidden City & National Museum sell out!", color: "#fee2e2" },
+                { icon: "🚇", tip: "Hotel is 85m from Daguanying subway station (Lines 7 & 16)", color: "#dbeafe" },
+                { icon: "💰", tip: "WeChat Pay & Alipay widely used. Carry small bills too!", color: "#d1fae5" },
+                { icon: "👟", tip: "Wear comfortable shoes - you'll walk 10,000+ steps daily!", color: "#fef3c7" },
+                { icon: "🗣️", tip: "Download translation apps - Google Translate & Pleco", color: "#e9d5ff" },
+                { icon: "🚕", tip: "Have destinations written in Chinese for taxis", color: "#fce7f3" }
+            ];
+
+            return (
+                <div>
+                    <div className="header">
+                        <div className="header-content">
+                            <ChinaFlag />
+                            <h1 className="title">Dan & Summer's Adventures in China</h1>
+                            <ChinaFlag />
+                        </div>
+                        <p className="subtitle">June 3-8, 2025 • Beijing 北京</p>
+                        <div className="hotel-info">
+                            DoubleTree by Hilton • 168 Guang'anmen Wai Main Street
+                        </div>
+                    </div>
+
+                    <div className="nav-tabs">
+                        {[
+                            { id: 'itinerary', label: 'Itinerary', icon: '📅' },
+                            { id: 'currency', label: 'Currency', icon: '💱' },
+                            { id: 'maps', label: 'Maps', icon: '🗺️' },
+                            { id: 'translator', label: 'Translator', icon: '🔤' },
+                            { id: 'food', label: 'Food', icon: '🍜' },
+                            { id: 'tips', label: 'Tips', icon: '💡' }
+                        ].map(tab => (
+                            <button
+                                key={tab.id}
+                                onClick={() => setActiveTab(tab.id)}
+                                className={`nav-tab ${activeTab === tab.id ? 'active' : ''}`}
+                            >
+                                <span className="tab-icon">{tab.icon}</span>
+                                <span className="tab-label">{tab.label}</span>
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="container">
+                        {activeTab === 'itinerary' && (
+                            <div className="space-y-4">
+                                <div className="alert-box">
+                                    <p className="alert-title">⚠️ CRITICAL: Book all tickets NOW!</p>
+                                    <p className="alert-text">Forbidden City & National Museum sell out days in advance!</p>
+                                </div>
+                                
+                                {itinerary.map((day) => (
+                                    <div key={day.day} className="card">
+                                        <button
+                                            onClick={() => setActiveDay(activeDay === day.day ? null : day.day)}
+                                            className="card-header"
+                                        >
+                                            <div className="card-header-content">
+                                                <span className="day-emoji">{day.emoji}</span>
+                                                <div>
+                                                    <div className="day-title">Day {day.day}: {day.title}</div>
+                                                    <div className="day-date">{day.date}</div>
+                                                </div>
+                                            </div>
+                                            <span style={{fontSize: '1.5rem'}}>{activeDay === day.day ? '▼' : '▶'}</span>
+                                        </button>
+                                        
+                                        {activeDay === day.day && (
+                                            <div className="card-body">
+                                                {day.activities.map((act, idx) => (
+                                                    <div key={idx} className="activity-item">
+                                                        <span className="activity-icon">{act.icon}</span>
+                                                        <div style={{flex: 1}}>
+                                                            <div className="activity-time">{act.time}</div>
+                                                            <div className="activity-desc">{act.activity}</div>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                                
+                                                <div className="bourdain-quote">
+                                                    <div className="bourdain-label">🎙️ Bourdain's Take:</div>
+                                                    <div className="bourdain-text">{day.bourdainTip}</div>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
+                        {activeTab === 'currency' && (
+                            <div className="card" style={{padding: '1.5rem'}}>
+                                <div style={{textAlign: 'center', marginBottom: '1.5rem'}}>
+                                    <h2 style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '0.5rem'}}>
+                                        💱 Currency Converter
+                                    </h2>
+                                    <p style={{fontSize: '0.875rem', color: '#6b7280'}}>
+                                        1 USD = {exchangeRate} CNY (Yuan)
+                                    </p>
+                                </div>
+                                
+                                <div className="space-y-4">
+                                    <div className="input-group" style={{background: '#dbeafe', padding: '1rem', borderRadius: '8px'}}>
+                                        <label className="input-label" style={{color: '#1e40af'}}>
+                                            💵 US Dollars (USD)
+                                        </label>
+                                        <input
+                                            type="number"
+                                            value={usdAmount}
+                                            onChange={(e) => {
+                                                setUsdAmount(e.target.value);
+                                                convertUSDtoCNY(e.target.value);
+                                            }}
+                                            placeholder="Enter USD amount"
+                                            className="input-field"
+                                            style={{background: '#dbeafe', borderColor: '#93c5fd'}}
+                                        />
+                                    </div>
+
+                                    <div style={{textAlign: 'center', fontSize: '1.5rem'}}>⇅</div>
+
+                                    <div className="input-group" style={{background: '#fee2e2', padding: '1rem', borderRadius: '8px'}}>
+                                        <label className="input-label" style={{color: '#991b1b'}}>
+                                            💴 Chinese Yuan (CNY) ¥
+                                        </label>
+                                        <input
+                                            type="number"
+                                            value={cnyAmount}
+                                            onChange={(e) => {
+                                                setCnyAmount(e.target.value);
+                                                convertCNYtoUSD(e.target.value);
+                                            }}
+                                            placeholder="Enter CNY amount"
+                                            className="input-field"
+                                            style={{background: '#fee2e2', borderColor: '#fca5a5'}}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="info-box-yellow" style={{marginTop: '1rem'}}>
+                                    <p style={{fontSize: '0.875rem', color: '#374151'}}>
+                                        💡 <strong>Quick Reference:</strong>
+                                    </p>
+                                    <ul style={{fontSize: '0.875rem', color: '#6b7280', marginTop: '0.5rem'}}>
+                                        <li>$10 USD ≈ ¥72 CNY</li>
+                                        <li>$50 USD ≈ ¥362 CNY</li>
+                                        <li>$100 USD ≈ ¥724 CNY</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'maps' && (
+                            <div className="space-y-4">
+                                <div className="card" style={{padding: '1.5rem'}}>
+                                    <h2 style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                        🗺️ Navigation in China
+                                    </h2>
+                                    
+                                    <div className="space-y-4">
+                                        <div className="info-box-red">
+                                            <h3 style={{fontWeight: 'bold', color: '#991b1b', marginBottom: '0.5rem'}}>⚠️ Important: Google Maps Doesn't Work!</h3>
+                                            <p style={{fontSize: '0.875rem', color: '#374151'}}>Google services are blocked in China. Use Baidu Maps instead!</p>
+                                        </div>
+
+                                        <div className="info-box-blue">
+                                            <h3 style={{fontWeight: 'bold', color: '#1e40af', marginBottom: '0.5rem'}}>🇨🇳 Baidu Maps (百度地图)</h3>
+                                            <p style={{fontSize: '0.875rem', color: '#374151', marginBottom: '0.75rem'}}>China's #1 navigation app - works perfectly in Beijing!</p>
+                                            <a
+                                                href="https://map.baidu.com/"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="btn btn-blue"
+                                            >
+                                                Open Baidu Maps 🚀
+                                            </a>
+                                            <p style={{fontSize: '0.75rem', color: '#6b7280', marginTop: '0.5rem'}}>
+                                                Download the Baidu Maps app before you go! Available on iOS & Android.
+                                            </p>
+                                        </div>
+
+                                        <div className="info-box-green">
+                                            <h3 style={{fontWeight: 'bold', color: '#065f46', marginBottom: '0.5rem'}}>📍 Your Hotel Location</h3>
+                                            <p style={{fontSize: '0.875rem', color: '#374151'}}>
+                                                <strong>DoubleTree by Hilton Beijing</strong><br/>
+                                                168 Guang'anmen Wai Main Street<br/>
+                                                Xicheng District, Beijing<br/>
+                                                北京市西城区广安门外大街168号
+                                            </p>
+                                            <div style={{marginTop: '0.5rem', fontSize: '0.75rem', color: '#6b7280'}}>
+                                                85 meters from Daguanying subway station (Lines 7 & 16)
+                                            </div>
+                                        </div>
+
+                                        <div className="info-box-purple">
+                                            <h3 style={{fontWeight: 'bold', color: '#6b21a8', marginBottom: '0.5rem'}}>🚇 Beijing Subway Map</h3>
+                                            <a
+                                                href="https://www.travelchinaguide.com/cityguides/beijing/subway-map.htm"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="btn btn-purple"
+                                            >
+                                                View Subway Map 🚇
+                                            </a>
+                                        </div>
+
+                                        <div className="info-box-yellow">
+                                            <h3 style={{fontWeight: 'bold', color: '#92400e', marginBottom: '0.5rem'}}>📱 Offline Navigation Tips</h3>
+                                            <ul style={{fontSize: '0.875rem', color: '#374151'}}>
+                                                <li>✅ Download Baidu Maps app and save offline maps for Beijing</li>
+                                                <li>✅ Screenshot important locations and addresses in Chinese</li>
+                                                <li>✅ Save this HTML app to your phone for offline access!</li>
+                                                <li>✅ Hotel concierge can help with directions in Chinese</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'translator' && (
+                            <div className="card" style={{padding: '1.5rem'}}>
+                                <h2 style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                    🔤 AI Translation Assistant
+                                </h2>
+                                
+                                <div className="space-y-4">
+                                    <div style={{background: 'linear-gradient(135deg, #eff6ff 0%, #f3e8ff 100%)', padding: '1rem', borderRadius: '8px'}}>
+                                        <p style={{fontSize: '0.875rem', color: '#374151', marginBottom: '0.75rem'}}>
+                                            📸 Take a photo of Chinese text and I'll translate it to English instantly!
+                                        </p>
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            capture="environment"
+                                            onChange={handleImageUpload}
+                                            className="file-input"
+                                        />
+                                    </div>
+
+                                    {selectedImage && (
+                                        <div className="image-preview">
+                                            <h3>📷 Your Image:</h3>
+                                            <img src={selectedImage} alt="Selected" />
+                                        </div>
+                                    )}
+
+                                    {isTranslating && (
+                                        <div className="loading">
+                                            <div className="loading-text">
+                                                🔄 Translating Chinese text...
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {translation && !isTranslating && (
+                                        <div className="info-box-green">
+                                            <h3 style={{fontWeight: 'bold', color: '#065f46', marginBottom: '0.5rem'}}>✅ Translation:</h3>
+                                            <div style={{color: '#374151', whiteSpace: 'pre-wrap'}}>{translation}</div>
+                                        </div>
+                                    )}
+
+                                    <div className="info-box-yellow">
+                                        <h3 style={{fontWeight: 'bold', color: '#92400e', marginBottom: '0.5rem'}}>💡 Pro Tips:</h3>
+                                        <ul style={{fontSize: '0.875rem', color: '#374151'}}>
+                                            <li>✅ Make sure the image is clear and well-lit</li>
+                                            <li>✅ Works with menus, signs, receipts, instructions</li>
+                                            <li>✅ Also download Google Translate app as backup</li>
+                                            <li>✅ Pleco app is great for dictionary lookups</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'food' && (
+                            <div className="space-y-4">
+                                <div style={{background: 'linear-gradient(135deg, #ef4444 0%, #f97316 100%)', color: 'white', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)'}}>
+                                    <h2 style={{fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '0.5rem'}}>🍜 Eat Like Bourdain</h2>
+                                    <p style={{fontSize: '0.875rem', opacity: 0.9}}>"Look, if you're scared, you're not eating right."</p>
+                                </div>
+
+                                <div className="card" style={{padding: '1rem'}}>
+                                    <h3 style={{fontWeight: 'bold', fontSize: '1.125rem', marginBottom: '0.75rem'}}>Must-Try Restaurants:</h3>
+                                    <div className="space-y-4">
+                                        {restaurants.map((rest, idx) => (
+                                            <div key={idx} className="restaurant-card">
+                                                <div className="restaurant-name">{rest.name}</div>
+                                                <div className="restaurant-type">{rest.type}</div>
+                                                <div className="restaurant-note">{rest.note}</div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="card" style={{padding: '1rem'}}>
+                                    <h3 style={{fontWeight: 'bold', fontSize: '1.125rem', marginBottom: '0.75rem'}}>🦆 Must-Eat Dishes:</h3>
+                                    <div className="grid-2">
+                                        {[
+                                            { dish: "Beijing Roast Duck 🦆", desc: "Crispy skin, tender meat - THE Beijing experience" },
+                                            { dish: "Mutton Hot Pot 🍲", desc: "Since 1903 at Donglaishun" },
+                                            { dish: "Baodu (Tripe) 🫕", desc: "Quick-fried, authentic Beijing" },
+                                            { dish: "Zhajiangmian 🍜", desc: "Noodles with bean paste" },
+                                            { dish: "Street Food 🦂", desc: "Scorpions, starfish, kebabs!" },
+                                            { dish: "Tea 🍵", desc: "Jasmine tea from Wuyutai" }
+                                        ].map((item, idx) => (
+                                            <div key={idx} style={{background: '#fef3c7', padding: '0.75rem', borderRadius: '8px', border: '1px solid #fde047'}}>
+                                                <div style={{fontWeight: 'bold'}}>{item.dish}</div>
+                                                <div style={{fontSize: '0.875rem', color: '#6b7280'}}>{item.desc}</div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div style={{background: 'linear-gradient(135deg, #f3e8ff 0%, #fce7f3 100%)', padding: '1rem', borderRadius: '8px', borderLeft: '4px solid #a855f7'}}>
+                                    <p style={{fontWeight: 'bold', color: '#6b21a8', marginBottom: '0.5rem'}}>🎙️ Final Bourdain Wisdom:</p>
+                                    <p style={{color: '#374151', fontStyle: 'italic'}}>
+                                        "The street food, the hole-in-the-wall joints, the places where nobody speaks English - 
+                                        that's where the magic happens. Don't be afraid. Be hungry."
+                                    </p>
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'tips' && (
+                            <div className="space-y-4">
+                                <div style={{background: 'linear-gradient(135deg, #10b981 0%, #3b82f6 100%)', color: 'white', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)'}}>
+                                    <h2 style={{fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '0.5rem'}}>💡 Pro Traveler Tips</h2>
+                                    <p style={{fontSize: '0.875rem', opacity: 0.9}}>Make your Beijing adventure smooth & unforgettable</p>
+                                </div>
+
+                                <div className="grid-2">
+                                    {tips.map((tip, idx) => (
+                                        <div key={idx} className="tip-card" style={{background: tip.color}}>
+                                            <div className="tip-icon">{tip.icon}</div>
+                                            <div className="tip-text">{tip.tip}</div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className="card" style={{padding: '1rem'}}>
+                                    <h3 style={{fontWeight: 'bold', fontSize: '1.125rem', marginBottom: '0.75rem'}}>📱 Essential Apps:</h3>
+                                    <div className="space-y-4">
+                                        {[
+                                            { app: "Baidu Maps 🗺️", why: "Navigation (Google Maps doesn't work!)" },
+                                            { app: "WeChat 💬", why: "Messaging, payments, everything!" },
+                                            { app: "Google Translate 🔤", why: "Offline translation" },
+                                            { app: "Pleco 📖", why: "Chinese dictionary with camera" },
+                                            { app: "This HTML App 🌟", why: "Save offline - your trip companion!" }
+                                        ].map((item, idx) => (
+                                            <div key={idx} style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f9fafb', padding: '0.75rem', borderRadius: '8px'}}>
+                                                <span style={{fontWeight: 'bold'}}>{item.app}</span>
+                                                <span style={{fontSize: '0.875rem', color: '#6b7280'}}>{item.why}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="info-box-red">
+                                    <h3 style={{fontWeight: 'bold', color: '#991b1b', marginBottom: '0.5rem'}}>⚡ Before You Go:</h3>
+                                    <ul style={{fontSize: '0.875rem', color: '#374151'}}>
+                                        <li>✅ Book ALL attraction tickets NOW (they sell out!)</li>
+                                        <li>✅ Download VPN app (ExpressVPN, NordVPN) for Google access</li>
+                                        <li>✅ Notify your bank you're traveling to China</li>
+                                        <li>✅ Bring portable charger & power adapter</li>
+                                        <li>✅ Save this HTML app to your phone for offline use!</li>
+                                        <li>✅ Print or screenshot your hotel address in Chinese</li>
+                                    </ul>
+                                </div>
+
+                                <div style={{background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)', padding: '1rem', borderRadius: '8px'}}>
+                                    <h3 style={{fontWeight: 'bold', color: '#92400e', marginBottom: '0.5rem'}}>🏨 Hotel Contact:</h3>
+                                    <p style={{fontSize: '0.875rem', color: '#374151'}}>
+                                        <strong>DoubleTree by Hilton Beijing</strong><br/>
+                                        168 Guang'anmen Wai Main Street<br/>
+                                        Ask for Cherry at reception - noted for excellent visitor assistance!<br/>
+                                        Features: Indoor pool 🏊, rooftop garden 🌸, spa 🧖, fitness center 💪
+                                    </p>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="footer">
+                        <p className="footer-text">🇨🇳 Zàijiàn from Beijing! Safe travels! 🇨🇳</p>
+                        <p className="footer-subtext">Dan & Summer's Epic Adventure • June 2025</p>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
